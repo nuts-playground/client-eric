@@ -1,2 +1,1 @@
-# client-eric
-common-view와 분리
+## eric-page
