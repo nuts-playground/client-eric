@@ -12,9 +12,11 @@ import axios from "axios";
 
 export default function Header() {
     const [loginState, setLoginState] = useState(false)
-    const getUserReq = async() => {
+    async function getUserReq() {
         const userInfoUrl = process.env.NEXT_PUBLIC_USER_INFO_URL as string;
+
         if(userInfoUrl.indexOf('http://localhost') === 0) return
+
         const res = await fetch(userInfoUrl,{
             method: 'GET',
             credentials: "include"
@@ -25,6 +27,21 @@ export default function Header() {
 
         isLogin? setLoginState(true) : setLoginState(false)
     }
+
+    async function userLogOut() {
+        const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
+        const res = await fetch(userLogOutUrl,{
+            method: 'GET',
+            credentials: "include"
+        })
+        const resData = await res.json();
+        if(resData === true) {
+            location.reload();
+        } else {
+            console.log('로그인 안되어 있는데 시도 에러');
+        }
+    }
+
     useEffect(() => {
         (async()=>{
             await getUserReq()
@@ -63,17 +80,25 @@ export default function Header() {
     const userProfile = () => {
         return (
             <div className={`flex items-center gap-1 border-base-400`}>
-                <button className="btn btn-ghost btn-circle ">
+                <button className="btn btn-ghost btn-circle">
                     <div className="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                         </svg>
                         <span className="badge badge-xs badge-primary indicator-item"></span>
                     </div>
                 </button>
-                <button className="btn btn-ghost btn-circle ">
-                    <Icons.UserIcon/>
+                <button className="btn btn-ghost btn-circle dropdown dropdown-end relative flex justify-center ">
+                        <Icons.UserIcon/>
+                        <ul tabIndex={0} className="dropdown-content z-[5] menu p-2 shadow bg-gray-100 rounded-box w-32 top-12 font-normal">
+                            <li>
+                                <p>마이페이지</p>
+                            </li>
+                            <li onClick={userLogOut}>
+                                <p>로그아웃</p>
+                            </li>
+                        </ul>
                 </button>
             </div>
         )

@@ -23,3 +23,4 @@ class EnvConfig {
 }
 
 module.exports = { EnvConfig }
+

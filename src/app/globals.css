@@ -21,6 +21,11 @@ body {
 .bmhtairttf {
     font-family: -apple-system, "BM Hanna Air", sans-serif;
 }
+
+.notosansttf {
+    font-family: -apple-system, "Noto Sans KR", sans-serif;
+}
+
 html {
     background-color: #ffffff !important;
 }

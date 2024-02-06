@@ -29,7 +29,7 @@ const ContentCard: React.FC<ContentCardProps> =
                 </ul>
             </div>
             <div className={`body-area w-full h-full p-1`}>
-                <div className={`title-area mb-4 pb-1 bmhttf`}>
+                <div className={`title-area mb-4 pb-1 font-bold`}>
                     <p>{title}</p>
                 </div>
                 <div className={`description-area `}>

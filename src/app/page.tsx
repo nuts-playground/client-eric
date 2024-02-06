@@ -21,11 +21,11 @@ export default function Home() {
           <Header/>
           {
               !actionState ? <Loading/> :
-                  <section className={`px-8 py-8 flex justify-center bmhtairttf`}>
+                  <section className={`px-8 py-8 flex justify-center `}>
                       <div className=" max-w-6xl w-full flex flex-col items-center justify-center">
-                          <div className="hero-content text-center mb-3 p-0">
+                          <div className="hero-content text-center mb-3 p-0 relative">
                               <div className="max-w-md">
-                                  <h1 className="text-4xl font-bold bmhttf">Hi there 👋</h1>
+                                  <h1 className="text-4xl font-bold">안녕하세요 🙇</h1>
                                   <p className={`pt-3 pb-6`}>저는 이런 걸 만들 예정입니다!</p>
                               </div>
                           </div>
