@@ -5,9 +5,9 @@ import GOOGLE_ICON from '../../public/icon/google-icon.svg';
 import GITHUB_ICON from '../../public/icon/github-icon.svg';
 import NAVER_ICON from '../../public/icon/naver-icon.svg';
 import KAKAO_ICON from '../../public/icon/kakao-icon.svg';
-import * as Icons from '../../public/icon/index';
 import * as process from "process";
 import axios from "axios";
+import * as SvgIcon from "/public/icon/index-svg";
 
 
 export default function Header() {
@@ -15,7 +15,7 @@ export default function Header() {
     async function getUserReq() {
         const userInfoUrl = process.env.NEXT_PUBLIC_USER_INFO_URL as string;
 
-        if(userInfoUrl.indexOf('http://localhost') === 0) return
+        // if(userInfoUrl.indexOf('http://localhost') === 0) return
 
         const res = await fetch(userInfoUrl,{
             method: 'GET',
@@ -90,7 +90,8 @@ export default function Header() {
                     </div>
                 </button>
                 <button className="btn btn-ghost btn-circle dropdown dropdown-end relative flex justify-center ">
-                        <Icons.UserIcon/>
+                        <SvgIcon.User/>
+
                         <ul tabIndex={0} className="dropdown-content z-[5] menu p-2 shadow bg-gray-100 rounded-box w-32 top-12 font-normal">
                             <li>
                                 <p>마이페이지</p>

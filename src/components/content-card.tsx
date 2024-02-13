@@ -4,30 +4,34 @@ import ChatIcon from '../../public/icon/chat.png';
 import EyesIcon from '../../public/icon/eyes.png';
 import NestJsIcon from '../../public/icon/nestjs.png';
 import React from "react";
+import Link from "next/link";
+import log from "refractor/lang/log";
+import {Scope} from "sucrase/dist/types/parser/tokenizer/state";
 interface ContentCardProps {
-    skillIcons?: StaticImageData[];
+    skillIcons?: Function[];
     title?: string;
     description?: string;
+    pageLink: string;
 }
 
 const ContentCard: React.FC<ContentCardProps> =
-    ({ skillIcons, title, description }) => {
+    ({ skillIcons, title, description,pageLink }) => {
+
     return(
-        <div className={`content-card w-64 h-80 
-        flex flex-col  items-center 
-        border-2 border-gray-300 rounded-xl 
-        px-5 py-6 transition hover:scale-103
-        duration-300 cursor-pointer
-        `}>
-            <div className={`skill-area w-full h-10 mb-2`}>
-                <ul className={`flex gap-2`}>
-                    {skillIcons && skillIcons.map((icon, index) => (
-                        <li key={index}>
-                            <Image src={icon} width={25}  alt={`Skill Icon ${index + 1}`} />
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        <Link
+            className={`content-card w-64 h-80 
+                        flex flex-col  items-center
+                        rounded-sm
+                        shadow-sm
+                        border
+                        bg-card-content
+                        px-5 py-6 transition hover:scale-103
+                        duration-300 cursor-pointer
+                        relative
+                        box-border
+            `}
+            href={pageLink}
+        >
             <div className={`body-area w-full h-full p-1`}>
                 <div className={`title-area mb-4 pb-1 font-bold`}>
                     <p>{title}</p>
@@ -36,22 +40,21 @@ const ContentCard: React.FC<ContentCardProps> =
                     <p>{description}</p>
                 </div>
             </div>
-            <div className={`footer-area w-full h-6 flex gap-4 justify-end`}>
-                    <div className={`flex gap-1.5`}>
-                        <p>
-                            <Image width={20} src={EyesIcon} alt={'조회 수 겸 눈 아이콘'}/>
-                        </p>
-                        <p className={`text-gray-500 text-sm`}>0</p>
-                    </div>
-                    <div className={`flex gap-1.5`}>
-                        <p>
-                            <Image src={ChatIcon} width={20} alt={'댓글 겸 채팅 아이콘'}/>
-                        </p>
-                        <p className={`text-gray-500 text-sm`}>0</p>
-                    </div>
+
+            <div className={`skill-area w-full h-14 flex items-center absolute bottom-0 left-0 border-t`}>
+                <ul className={`flex px-5 gap-2 h-full w-full items-center`}>
+                    {skillIcons && skillIcons.map((icon, index) => (
+                        <li key={index}>
+                            <div className={`skill-icon-wrap`}>
+                                {icon()}
+                            </div>
+                            {/*<Image src={icon} width={25} alt={`Skill Icon ${index + 1}`}/>*/}
+                        </li>
+                    ))}
+                </ul>
             </div>
-        </div>
+        </Link>
     )
-}
+    }
 
 export default ContentCard;

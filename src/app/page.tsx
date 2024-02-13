@@ -1,12 +1,9 @@
 'use client'
 
-import Image from 'next/image'
-import Link from "next/link";
-import StartCard from "@/components/start-card";
 import Header from "@/components/header";
 import Loading from "@/components/loading";
 import ContentCard from "@/components/content-card";
-import * as Icons from "/public/icon/index";
+import * as SvgIcons from '../../public/icon/index-svg';
 import Footer from "@/components/footer";
 import React, {useEffect, useState} from "react";
 export default function Home() {
@@ -15,13 +12,12 @@ export default function Home() {
     useEffect(() => {
         setActionState(true)
     },[])
-
     return (
       <main className={`h-full flex flex-col justify-between `}>
           <Header/>
           {
               !actionState ? <Loading/> :
-                  <section className={`px-8 py-8 flex justify-center `}>
+                  <section className={`p-12 flex justify-center `}>
                       <div className=" max-w-6xl w-full flex flex-col items-center justify-center">
                           <div className="hero-content text-center mb-3 p-0 relative">
                               <div className="max-w-md">
@@ -33,51 +29,66 @@ export default function Home() {
                               <ul className={`w-full flex flex-wrap justify-center gap-3`}>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts, Icons.NextJs]}
+                                          skillIcons={[
+                                              SvgIcons.Ts,
+                                              SvgIcons.Next
+                                          ]}
                                           title="Nuts-playgroud"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts, Icons.NestJs, Icons.Mysql]}
-                                          title="[예정] 내 마음대로 블로그"
+                                          skillIcons={[
+                                              SvgIcons.Ts,
+                                              SvgIcons.Next,
+                                              SvgIcons.Nest,
+                                              SvgIcons.Mysql,
+                                          ]}
+                                          title="[진행 중] 내 마음대로 블로그"
                                           description="냐옹"
+                                          pageLink={`/blog`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts,]}
+                                          skillIcons={[]}
                                           title="[예정] 홈택스 - 개인용 데이터"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts,]}
+                                          skillIcons={[]}
                                           title="[예정] 국민 건강보험 - 개인용 데이터"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts,]}
+                                          skillIcons={[]}
                                           title="[예정] 국토교통부 - 공시지가, 공시가격"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts,]}
+                                          skillIcons={[]}
                                           title="[예정] 대용량 크롤링 봇 - 도메인 미정"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
-                                          skillIcons={[Icons.Ts,]}
+                                          skillIcons={[]}
                                           title="[예정] 스크래핑 회피 기법 안내 솔루션"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                                   <li>
@@ -85,6 +96,7 @@ export default function Home() {
                                           skillIcons={[]}
                                           title="[예정] Jetbrains용 테스트 코드 프리셋 플러그인 - 개인용"
                                           description="냐옹"
+                                          pageLink={`/`}
                                       />
                                   </li>
                               </ul>

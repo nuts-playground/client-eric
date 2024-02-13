@@ -7,10 +7,9 @@
     --tw-border-opacity : none;
     --tw-bg-opacity: none;
 }
-body {
-    background-color: #ffffff !important;
-
-}
+/*body {*/
+/*    background-color: #ffffff !important;*/
+/*}*/
 
 .bmhttf {
     font-family: -apple-system, "BM Hanna Pro", sans-serif;
@@ -25,11 +24,23 @@ body {
 .notosansttf {
     font-family: -apple-system, "Noto Sans KR", sans-serif;
 }
-
-html {
-    background-color: #ffffff !important;
+.bg-global-color {
+    background-color: #ffffff;
 }
 
+.bg-card-content {
+    background-color: #ffffff;
+}
+
+.bg-test {
+    background-color: #f4f2ed;
+}
+
+.skill-icon-wrap {
+    border: 0.5px solid #ddd;
+    border-radius: 7px;
+    background-color: white;
+}
 
 .input:focus:focus {
     outline: none;
