@@ -36,7 +36,7 @@ const ContentCard: React.FC<ContentCardProps> =
                 <div className={`title-area mb-4 pb-1 font-bold`}>
                     <p>{title}</p>
                 </div>
-                <div className={`description-area `}>
+                <div className={`description-area text-sm`}>
                     <p>{description}</p>
                 </div>
             </div>

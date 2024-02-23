@@ -31,23 +31,26 @@ export default function Home() {
                                       <ContentCard
                                           skillIcons={[
                                               SvgIcons.Ts,
-                                              SvgIcons.Next
+                                              SvgIcons.Aws,
+                                              SvgIcons.Next,
                                           ]}
                                           title="Nuts-playgroud"
-                                          description="냐옹"
-                                          pageLink={`/`}
+                                          description="🗂 팀원들의 프로젝트를 공유하는 저장소"
+                                          pageLink={`https://github.com/nuts-playground`}
                                       />
                                   </li>
                                   <li>
                                       <ContentCard
                                           skillIcons={[
                                               SvgIcons.Ts,
+                                              SvgIcons.Aws,
                                               SvgIcons.Next,
                                               SvgIcons.Nest,
                                               SvgIcons.Mysql,
+                                              SvgIcons.GithubAction
                                           ]}
                                           title="[진행 중] 내 마음대로 블로그"
-                                          description="냐옹"
+                                          description="📚 만들어보면서 연습하는 NestJs, Next.js"
                                           pageLink={`/blog`}
                                       />
                                   </li>

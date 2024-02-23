@@ -1,4 +1,3 @@
-'use client'
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import GOOGLE_ICON from '../../public/icon/google-icon.svg';
@@ -9,9 +8,11 @@ import * as process from "process";
 import axios from "axios";
 import * as SvgIcon from "/public/icon/index-svg";
 
-
-export default function Header() {
-    const [loginState, setLoginState] = useState(false)
+interface HeaderOption {
+    boardPageNav?: string[]
+}
+export default function Header(headerOption: HeaderOption) {
+    const [loginState, setLoginState] = useState(false);
     async function getUserReq() {
         const userInfoUrl = process.env.NEXT_PUBLIC_USER_INFO_URL as string;
 
@@ -46,7 +47,7 @@ export default function Header() {
         (async()=>{
             await getUserReq()
         })()
-    },[])
+    },[headerOption.boardPageNav])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
@@ -106,44 +107,62 @@ export default function Header() {
     }
 
     return (
-        <nav className="navbar px-8 border-b-05 border-gray-300 flex justify-center">
-            <div className={`max-w-6xl w-full`}>
-                <div className="flex-1">
-                    <Link href={'/'}>팀 이름</Link>
+        <nav className="navbar px-8 border-b-05 border-gray-300 flex justify-center relative">
+            <div className={`max-w-6xl w-full flex justify-between`}>
+                <Link href={'https://notworking.site/'} className={`btn btn-ghost normal-case font-bold flex items-center gap-2`}>
+                    <SvgIcon.TeamIcon/>
+                    <p className={``}>Team Not Working</p>
+                </Link>
+                <div className={`absolute ab-center`}>
+                    <ul className={`flex gap-5`}>
+                        {
+                            headerOption.boardPageNav?.map( (item) =>
+                                <li key={item} className={`btn btn-ghost`}>{ item }</li>
+                            )
+                        }
+                    </ul>
                 </div>
                 <div className="flex-none">
                     <ul className="px-1">
                         <li>
                             {
-                                loginState ?  userProfile() : loginBtn()
+                                loginState ? userProfile() : loginBtn()
                             }
 
                             <dialog id="my_modal_2" className="modal">
                                 <div className="modal-box flex justify-center bg-white w-72 py-16">
                                     <div className="card flex-shrink-0  gap-4">
                                         <button onClick={
-                                            (e) => {oauthLogin(e, 'google')}
+                                            (e) => {
+                                                oauthLogin(e, 'google')
+                                            }
                                         } className='btn btn-custom btn-google bg-white hover:btn-google'>
                                             <GOOGLE_ICON/>
                                             <p>구글 계정으로 로그인</p>
                                         </button>
 
                                         <button onClick={
-                                            (e) => {oauthLogin(e, 'github')}
+                                            (e) => {
+                                                oauthLogin(e, 'github')
+                                            }
                                         } className='btn btn-custom bg-github text-white hover:bg-github'>
                                             <GITHUB_ICON/>
                                             <p>깃허브 계정으로 로그인</p>
                                         </button>
 
                                         <button onClick={
-                                            (e) => {oauthLogin(e, 'kakao')}
+                                            (e) => {
+                                                oauthLogin(e, 'kakao')
+                                            }
                                         } className='btn btn-custom bg-kakao hover:bg-kakao'>
                                             <KAKAO_ICON/>
                                             <p>카카오 계정으로 로그인</p>
                                         </button>
 
                                         <button onClick={
-                                            (e) => {oauthLogin(e, 'naver')}
+                                            (e) => {
+                                                oauthLogin(e, 'naver')
+                                            }
                                         } className='btn btn-custom bg-naver text-white hover:bg-naver'>
                                             <NAVER_ICON/>
                                             <p>네이버 계정으로 로그인</p>

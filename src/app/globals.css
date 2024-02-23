@@ -129,3 +129,9 @@ input:-webkit-autofill:active {
     color: rgba(0, 0, 0, 0.65);
 }
 
+.ab-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% , -50%);
+}
+

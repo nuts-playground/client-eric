@@ -14,7 +14,7 @@ export default function RootLayout({children}: {
 }) {
   return (
     <html lang="en">
-      <body className={`inter.className h-screen notosansttf bg-global-color`}>{children}</body>
+      <body className={`inter.className h-screen notosansttf bg-global-color min-w-80`}>{children}</body>
     </html>
   )
 }
