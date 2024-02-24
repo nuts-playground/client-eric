@@ -1,19 +1,27 @@
 import MDEditor, { commands } from "@uiw/react-md-editor";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Editor() {
     const [contentValue, setContentValue] = useState<string>();
+    const backAction = () => {
+        history.back()
+    }
     return (
         <div className={`p-8 `}>
+            <div className={`mb-5`}>
+                <select className="select max-w-xs bg-gray-300">
+                    <option>자유게시판</option>
+                    <option>개발게시판</option>
+                </select>
+            </div>
             <div className={`mb-5`}>
                 <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`}/>
             </div>
             <MDEditor
-
                 className={`mb-5`}
                 data-color-mode={'light'}
-                height={700}
-                minHeight={700}
+                // height={500}
+                minHeight={500}
                 highlightEnable={false}
                 value={contentValue}
                 preview={`edit`}
@@ -38,7 +46,7 @@ export default function Editor() {
                 <button className={`btn text-white bg-eric`}>
                     등록하기
                 </button>
-                <button className={`btn`}>
+                <button className={`btn bg-gray-300`} onClick={backAction}>
                     취소하기
                 </button>
             </div>

@@ -22,7 +22,7 @@ export default function Home() {
                           <div className="hero-content text-center mb-3 p-0 relative">
                               <div className="max-w-md">
                                   <h1 className="text-4xl font-bold">안녕하세요 🙇</h1>
-                                  <p className={`pt-3 pb-6`}>저는 이런 걸 만들 예정입니다!</p>
+                                  <p className={`pt-3 pb-6 text-lg`}>저는 이런 걸 만들고 있습니다!</p>
                               </div>
                           </div>
                           <div className={`w-full`}>

@@ -1,6 +1,8 @@
 'use client'
 import Header from "@/components/header";
 import Editor from "@/components/board/editor";
+import {useEffect, useState} from "react";
+import process from "process";
 
 export default function BlogNewContent() {
     return (

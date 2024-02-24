@@ -92,7 +92,6 @@ export default function Header(headerOption: HeaderOption) {
                 </button>
                 <button className="btn btn-ghost btn-circle dropdown dropdown-end relative flex justify-center ">
                         <SvgIcon.User/>
-
                         <ul tabIndex={0} className="dropdown-content z-[5] menu p-2 shadow bg-gray-100 rounded-box w-32 top-12 font-normal">
                             <li>
                                 <p>마이페이지</p>
@@ -113,7 +112,7 @@ export default function Header(headerOption: HeaderOption) {
                     <SvgIcon.TeamIcon/>
                     <p className={``}>Team Not Working</p>
                 </Link>
-                <div className={`absolute ab-center`}>
+                <div className={`absolute ab-center hidden md:block`}>
                     <ul className={`flex gap-5`}>
                         {
                             headerOption.boardPageNav?.map( (item) =>
