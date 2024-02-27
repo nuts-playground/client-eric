@@ -7,27 +7,13 @@ import KAKAO_ICON from '../../public/icon/kakao-icon.svg';
 import * as process from "process";
 import axios from "axios";
 import * as SvgIcon from "/public/icon/index-svg";
+import {FunctionGetUserInfo} from "@/components/function/getUser";
 
 interface HeaderOption {
     boardPageNav?: string[]
 }
 export default function Header(headerOption: HeaderOption) {
     const [loginState, setLoginState] = useState(false);
-    async function getUserReq() {
-        const userInfoUrl = process.env.NEXT_PUBLIC_USER_INFO_URL as string;
-
-        // if(userInfoUrl.indexOf('http://localhost') === 0) return
-
-        const res = await fetch(userInfoUrl,{
-            method: 'GET',
-            credentials: "include"
-        })
-        const resJson = await res.json();
-        const data = await resJson.data
-        const isLogin = Boolean(data.name && data.provider)
-
-        isLogin? setLoginState(true) : setLoginState(false)
-    }
 
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
@@ -37,6 +23,7 @@ export default function Header(headerOption: HeaderOption) {
         })
         const resData = await res.json();
         if(resData === true) {
+            localStorage.clear();
             location.reload();
         } else {
             console.log('로그인 안되어 있는데 시도 에러');
@@ -45,7 +32,8 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async()=>{
-            await getUserReq()
+            const curUser = await FunctionGetUserInfo();
+            if(curUser.email && curUser.name && curUser.provider) setLoginState(true)
         })()
     },[headerOption.boardPageNav])
 
