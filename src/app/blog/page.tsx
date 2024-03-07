@@ -25,7 +25,7 @@ export default function BlogMain() {
     },[])
 
     const getContentItem = async() => {
-        const getContentUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/getBoardLatestContentList'
+        const getContentUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/latestContentList'
         const res = await fetch(getContentUrl, {
             method: 'GET',
             credentials: "include"
@@ -35,7 +35,7 @@ export default function BlogMain() {
     }
 
     const boardPageNavItem = async(): Promise<string[]> => {
-        const getBoardCategoryUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/getBoardCategoryAll';
+        const getBoardCategoryUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/categoryList';
         const res = await fetch(getBoardCategoryUrl,{
             method: 'GET',
             credentials: "include"
