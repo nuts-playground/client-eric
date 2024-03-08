@@ -34,7 +34,9 @@ export default function BlogMain() {
         console.log(resJson)
     }
 
-    const boardPageNavItem = async(): Promise<string[]> => {
+    const boardPageNavItem = async(): Promise<string[] | undefined> => {
+        if (location.hostname === 'localhost') return;
+
         const getBoardCategoryUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/categoryList';
         const res = await fetch(getBoardCategoryUrl,{
             method: 'GET',
@@ -59,13 +61,13 @@ export default function BlogMain() {
             <Header boardPageNav={boardCategory}/>
             {
                 !actionState ? <Loading/> :
-                    <section className={`p-12 flex flex-col justify-between `}>
-                        <div className={`flex justify-between mb-10`}>
+                    <section className={`p-12 flex flex-col justify-between items-center`}>
+                        <div className={`flex justify-between mb-10 items-center max-w-6xl w-full`}>
                             <div className={`font-bold text-xl`}>최근 글</div>
 
                             <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link>
                         </div>
-                        <div className={`h-full mb-4`}>
+                        <div className={`h-full mb-4 max-w-6xl w-full`}>
                             <ul>
                                 {
                                     testBoard.map(item => {

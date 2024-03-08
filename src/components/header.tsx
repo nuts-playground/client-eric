@@ -32,6 +32,7 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async()=>{
+            if (location.hostname === 'localhost') return;
             const curUser = await FunctionGetUserInfo();
             if(curUser.email && curUser.name && curUser.provider) setLoginState(true)
         })()
@@ -56,7 +57,8 @@ export default function Header(headerOption: HeaderOption) {
     const loginBtn = () => {
         return (
             <button
-                className="btn btn-sm pr-5 pl-5 bg-eric text-white"
+                className="btn btn-sm pr-5 pl-5 bg-eric text-white tooltip tooltip-left"
+                data-tip="글쓰기 등 컨텐츠를 사용할 수 있어요!"
                 onClick={loginModalOpen}
             >로그인
             </button>
@@ -117,7 +119,14 @@ export default function Header(headerOption: HeaderOption) {
                             }
 
                             <dialog id="my_modal_2" className="modal">
-                                <div className="modal-box flex justify-center bg-white w-72 py-16">
+                                <div className="modal-box flex flex-col justify-center bg-white w-72 py-14">
+                                    <div className={`flex flex-col items-center justify-center mb-5`}>
+                                        <p className={`font-bold text-lg mb-1 p-1`}>로그인</p>
+                                        <div className={`text-center text-sm text-gray-500`}>
+                                            <p>걱정마세요!</p>
+                                            <p>이름, 이메일만 받습니다.</p>
+                                        </div>
+                                    </div>
                                     <div className="card flex-shrink-0  gap-4">
                                         <button onClick={
                                             (e) => {
@@ -146,14 +155,14 @@ export default function Header(headerOption: HeaderOption) {
                                             <p>카카오 계정으로 로그인</p>
                                         </button>
 
-                                        <button onClick={
-                                            (e) => {
-                                                oauthLogin(e, 'naver')
-                                            }
-                                        } className='btn btn-custom bg-naver text-white hover:bg-naver'>
-                                            <NAVER_ICON/>
-                                            <p>네이버 계정으로 로그인</p>
-                                        </button>
+                                        {/*<button onClick={*/}
+                                        {/*    (e) => {*/}
+                                        {/*        oauthLogin(e, 'naver')*/}
+                                        {/*    }*/}
+                                        {/*} className='btn btn-custom bg-naver text-white hover:bg-naver'>*/}
+                                        {/*    <NAVER_ICON/>*/}
+                                        {/*    <p>네이버 계정으로 로그인</p>*/}
+                                        {/*</button>*/}
                                     </div>
                                 </div>
                                 <form method="dialog" className="modal-backdrop">
