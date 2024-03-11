@@ -32,7 +32,7 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async()=>{
-            if (location.hostname === 'localhost') return;
+            // if (location.hostname === 'localhost') return;
             const curUser = await FunctionGetUserInfo();
             if(curUser.email && curUser.name && curUser.provider) setLoginState(true)
         })()

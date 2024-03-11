@@ -19,10 +19,6 @@ export default function Editor() {
             title: '자유게시판',
             id: 1
         },
-        {
-            title: '개발게시판',
-            id: 2
-        },
     ]
     const [categoryIdState, setCategoryIdState] = useState<string>('1')
     const [titleState, setTitleState] = useState<StrOrUn>()
@@ -83,7 +79,7 @@ export default function Editor() {
     }
 
     return (
-        <div className={`p-8`}>
+        <div className={`h-full`}>
             <div className={`mb-5`}>
                 <select className="select max-w-xs bg-gray-300" defaultValue={'1'} onChange={onChangeCategory}>
                     {
@@ -96,40 +92,37 @@ export default function Editor() {
             <div className={`mb-5`}>
                 <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`} onChange={onChangeTitle}/>
             </div>
-            <MDEditor
-                className={`mb-5`}
-                data-color-mode={'light'}
-                height={500}
-                minHeight={500}
-                maxHeight={800}
-                highlightEnable={false}
-                value={contentState}
-                preview={`edit`}
-                commands={[
-                    commands.hr,
-                    commands.quote,
-                    commands.divider,
+            {/*<MDEditor*/}
+            {/*    className={`mb-5`}*/}
+            {/*    data-color-mode={'light'}*/}
+            {/*    height={500}*/}
+            {/*    minHeight={500}*/}
+            {/*    maxHeight={800}*/}
+            {/*    highlightEnable={false}*/}
+            {/*    value={contentState}*/}
+            {/*    preview={`edit`}*/}
+            {/*    commands={[*/}
+            {/*        commands.hr,*/}
+            {/*        commands.quote,*/}
+            {/*        commands.divider,*/}
 
-                    commands.bold,
-                    commands.strikethrough,
-                    commands.codeBlock,
-                    commands.comment,
-                    commands.divider,
+            {/*        commands.bold,*/}
+            {/*        commands.strikethrough,*/}
+            {/*        commands.codeBlock,*/}
+            {/*        commands.comment,*/}
+            {/*        commands.divider,*/}
 
-                    commands.link,
-                    commands.table,
-                    commands.orderedListCommand,
-                ]}
-                onChange={setContentState}>
-            </MDEditor>
-            {
-                !alertState ? <FailAlert text={'게시글 등록에 실패했습니다.'}></FailAlert> : null
-            }
-
-            <div className={`flex gap-2 justify-center`}>
+            {/*        commands.link,*/}
+            {/*        commands.table,*/}
+            {/*        commands.orderedListCommand,*/}
+            {/*    ]}*/}
+            {/*    onChange={setContentState}>*/}
+            {/*</MDEditor>*/}
+            <textarea className="textarea textarea-bordered bg-white w-full resize-none sm:h-2/3 h-3/4" placeholder="본문 내용을 적어주세요."></textarea>
+            <div className={`flex gap-2 justify-center my-5`}>
                 {
                     writeState ?
-                        <button className={`btn text-white bg-eric `} onClick={submitBoardContent}>
+                        <button className={`btn text-white bg-eric`} onClick={submitBoardContent}>
                             <span>등록하기</span>
                         </button>
                         :

@@ -10,7 +10,9 @@
 /*body {*/
 /*    background-color: #ffffff !important;*/
 /*}*/
-
+* {
+    outline: none;
+}
 .bmhttf {
     font-family: -apple-system, "BM Hanna Pro", sans-serif;
 }
@@ -134,4 +136,10 @@ input:-webkit-autofill:active {
     top: 50%;
     transform: translate(-50% , -50%);
 }
+
+.textarea-bordered {
+    border-color: #e5e7eb;
+    border-width: 1px;
+}
+
 
