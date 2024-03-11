@@ -23,10 +23,15 @@ export default function Editor() {
     const [categoryIdState, setCategoryIdState] = useState<string>('1')
     const [titleState, setTitleState] = useState<StrOrUn>()
 
-    const [contentState, setContentState] = useState<string>();
+    const [contentState, setContentState] = useState('');
     const onChangeTitle = (e: BaseSyntheticEvent) => {
         const curTitle = e.target.value;
         setTitleState(curTitle)
+    }
+
+    const onChangeContent = (e: BaseSyntheticEvent) => {
+        console.log(contentState)
+        setContentState(String(e.target.value));
     }
 
     const onChangeCategory = (e: BaseSyntheticEvent) => {
@@ -52,7 +57,7 @@ export default function Editor() {
                 user_email: userEmail
             }
 
-            const createBoardUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/createBoardContent'
+            const createBoardUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/content'
             await axios.post(createBoardUrl, createValue, {
                 withCredentials: true
             })
@@ -92,33 +97,11 @@ export default function Editor() {
             <div className={`mb-5`}>
                 <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`} onChange={onChangeTitle}/>
             </div>
-            {/*<MDEditor*/}
-            {/*    className={`mb-5`}*/}
-            {/*    data-color-mode={'light'}*/}
-            {/*    height={500}*/}
-            {/*    minHeight={500}*/}
-            {/*    maxHeight={800}*/}
-            {/*    highlightEnable={false}*/}
-            {/*    value={contentState}*/}
-            {/*    preview={`edit`}*/}
-            {/*    commands={[*/}
-            {/*        commands.hr,*/}
-            {/*        commands.quote,*/}
-            {/*        commands.divider,*/}
-
-            {/*        commands.bold,*/}
-            {/*        commands.strikethrough,*/}
-            {/*        commands.codeBlock,*/}
-            {/*        commands.comment,*/}
-            {/*        commands.divider,*/}
-
-            {/*        commands.link,*/}
-            {/*        commands.table,*/}
-            {/*        commands.orderedListCommand,*/}
-            {/*    ]}*/}
-            {/*    onChange={setContentState}>*/}
-            {/*</MDEditor>*/}
-            <textarea className="textarea textarea-bordered bg-white w-full resize-none sm:h-2/3 h-3/4" placeholder="본문 내용을 적어주세요."></textarea>
+            <textarea
+                className="textarea textarea-bordered bg-white w-full resize-none sm:h-2/3 h-3/4"
+                placeholder="본문 내용을 적어주세요."
+                onChange={onChangeContent}
+            ></textarea>
             <div className={`flex gap-2 justify-center my-5`}>
                 {
                     writeState ?

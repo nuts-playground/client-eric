@@ -11,27 +11,39 @@ interface CategoryType {
     category_id: number;
     title: string;
 }
+
+interface BoardContent {
+    content_id: number;
+    title: string;
+    content: string;
+    create_dtm: string;
+    update_dtm: string;
+    delete_dtm: string;
+}
 export default function BlogMain() {
 
     const [boardCategory, setBoardCategory] = useState<string[]>();
     const [actionState, setActionState] = useState(false);
-
+    const [boardContent, setBoardContent] = useState<BoardContent[] | undefined>(undefined)
     useEffect(() => {
         (async()=>{
             const categoryList = await boardPageNavItem()
+            const contentList = await getContentItem();
+            setBoardContent(contentList)
+
             setBoardCategory(categoryList)
             setActionState(true)
         })()
     },[])
 
-    const getContentItem = async() => {
+    const getContentItem = async(): Promise<BoardContent[] | undefined>=> {
         const getContentUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/latestContentList'
         const res = await fetch(getContentUrl, {
             method: 'GET',
             credentials: "include"
         })
         const resJson = await res.json();
-        console.log(resJson)
+        return resJson.data;
     }
 
     const boardPageNavItem = async(): Promise<string[] | undefined> => {
@@ -70,11 +82,11 @@ export default function BlogMain() {
                         <div className={`h-full mb-4 max-w-6xl w-full`}>
                             <ul>
                                 {
-                                    testBoard.map(item => {
+                                    boardContent?.map(item => {
                                         return <li key={item.title}>
                                             <Content
                                                 title={item.title}
-                                                writeTime={item.writeTime}
+                                                writeTime={item.create_dtm}
                                                 content={item.content}
                                             />
                                         </li>
