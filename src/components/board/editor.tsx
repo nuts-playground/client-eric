@@ -30,7 +30,6 @@ export default function Editor() {
     }
 
     const onChangeContent = (e: BaseSyntheticEvent) => {
-        console.log(contentState)
         setContentState(String(e.target.value));
     }
 
@@ -98,7 +97,7 @@ export default function Editor() {
                 <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`} onChange={onChangeTitle}/>
             </div>
             <textarea
-                className="textarea textarea-bordered bg-white w-full resize-none sm:h-2/3 h-3/4"
+                className="textarea textarea-bordered  bg-white w-full resize-none sm:h-2/3 h-3/4"
                 placeholder="본문 내용을 적어주세요."
                 onChange={onChangeContent}
             ></textarea>

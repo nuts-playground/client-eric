@@ -140,6 +140,7 @@ input:-webkit-autofill:active {
 .textarea-bordered {
     border-color: #e5e7eb;
     border-width: 1px;
+    outline: none !important;
 }
 
 
