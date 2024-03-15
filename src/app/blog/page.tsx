@@ -59,14 +59,11 @@ export default function BlogMain() {
         return categoryList.map((item: CategoryType) => item.title)
     }
 
-    const testBoard = [
-        {title: 'test1', writeTime: '2024.02.24', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum distinctio dolore dolorum exercitationem odio omnis rerum soluta, sunt velit? Cupiditate doloremque esse fuga id itaque omnis perferendis ratione vel?'},
-        {title: 'test2', writeTime: '2024.02.24', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum distinctio dolore dolorum exercitationem odio omnis rerum soluta, sunt velit? Cupiditate doloremque esse fuga id itaque omnis perferendis ratione vel?'},
-        {title: 'test3', writeTime: '2024.02.24', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum distinctio dolore dolorum exercitationem odio omnis rerum soluta, sunt velit? Cupiditate doloremque esse fuga id itaque omnis perferendis ratione vel?'},
-        {title: 'test4', writeTime: '2024.02.24', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum distinctio dolore dolorum exercitationem odio omnis rerum soluta, sunt velit? Cupiditate doloremque esse fuga id itaque omnis perferendis ratione vel?'},
-        {title: 'test5', writeTime: '2024.02.24', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum distinctio dolore dolorum exercitationem odio omnis rerum soluta, sunt velit? Cupiditate doloremque esse fuga id itaque omnis perferendis ratione vel?'},
-    ]
+    const loginCheck = () => {
+        const globalThis = window as any;
 
+        return globalThis.testUser === true;
+    }
     return (
         <main className={`h-full flex flex-col justify-between`}>
 
@@ -77,7 +74,7 @@ export default function BlogMain() {
                         <div className={`flex justify-between mb-10 items-center max-w-6xl w-full`}>
                             <div className={`font-bold text-xl`}>최근 글</div>
 
-                            <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link>
+                            { loginCheck() ? <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link> : null }
                         </div>
                         <div className={`h-full mb-4 max-w-6xl w-full`}>
                             <ul>

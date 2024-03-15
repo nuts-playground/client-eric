@@ -34,7 +34,11 @@ export default function Header(headerOption: HeaderOption) {
         (async()=>{
             // if (location.hostname === 'localhost') return;
             const curUser = await FunctionGetUserInfo();
-            if(curUser.email && curUser.name && curUser.provider) setLoginState(true)
+            if(curUser.email && curUser.name && curUser.provider){
+                const globalThis = window as any;
+                globalThis.testUser = true;
+                setLoginState(true)
+            }
         })()
     },[headerOption.boardPageNav])
 
