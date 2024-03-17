@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
 import GOOGLE_ICON from '../../public/icon/google-icon.svg';
 import GITHUB_ICON from '../../public/icon/github-icon.svg';
-import NAVER_ICON from '../../public/icon/naver-icon.svg';
 import KAKAO_ICON from '../../public/icon/kakao-icon.svg';
 import * as process from "process";
 import axios from "axios";
 import * as SvgIcon from "/public/icon/index-svg";
 import {FunctionGetUserInfo} from "@/components/function/getUser";
+import useUserInfo from "@/hooks/useUserInfo";
 
 interface HeaderOption {
     boardPageNav?: string[]
 }
 export default function Header(headerOption: HeaderOption) {
-    const [loginState, setLoginState] = useState(false);
+    const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
 
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
@@ -23,7 +23,7 @@ export default function Header(headerOption: HeaderOption) {
         })
         const resData = await res.json();
         if(resData === true) {
-            localStorage.clear();
+            deleteUserInfo();
             location.reload();
         } else {
             console.log('로그인 안되어 있는데 시도 에러');
@@ -32,15 +32,10 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async()=>{
-            // if (location.hostname === 'localhost') return;
             const curUser = await FunctionGetUserInfo();
-            if(curUser.email && curUser.name && curUser.provider){
-                const globalThis = window as any;
-                globalThis.testUser = true;
-                setLoginState(true)
-            }
+            setUserInfo(curUser);
         })()
-    },[headerOption.boardPageNav])
+    },[setUserInfo])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
@@ -56,7 +51,6 @@ export default function Header(headerOption: HeaderOption) {
                     location.href = redirectUrl;
                 }
             })
-
     }
     const loginBtn = () => {
         return (
@@ -119,7 +113,7 @@ export default function Header(headerOption: HeaderOption) {
                     <ul className="px-1">
                         <li>
                             {
-                                loginState ? userProfile() : loginBtn()
+                                userInfo ? userProfile() : loginBtn()
                             }
 
                             <dialog id="my_modal_2" className="modal">
