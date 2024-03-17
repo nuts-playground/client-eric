@@ -4,13 +4,15 @@ import Editor from "@/components/board/editor";
 import {useEffect, useState} from "react";
 import process from "process";
 import {SuccessAlert} from "@/components/alert";
+import useUserInfo from "@/hooks/useUserInfo";
 
 export default function BlogNewContent() {
+    const {userInfo} = useUserInfo()
     useEffect(() => {
-        if(!localStorage.getItem('cur-user-info')) {
+        if(!userInfo) {
             history.back()
         }
-    }, []);
+    }, [userInfo]);
     return (
         <main className={`h-full flex flex-col`}>
             <Header/>

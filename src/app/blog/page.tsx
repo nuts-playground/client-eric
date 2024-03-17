@@ -6,6 +6,7 @@ import Loading from "@/components/loading";
 import Link from "next/link";
 import * as process from "process";
 import Content from "@/components/board/content";
+import useUserInfo from "@/hooks/useUserInfo";
 
 interface CategoryType {
     category_id: number;
@@ -21,7 +22,7 @@ interface BoardContent {
     delete_dtm: string;
 }
 export default function BlogMain() {
-
+    const {userInfo} = useUserInfo()
     const [boardCategory, setBoardCategory] = useState<string[]>();
     const [actionState, setActionState] = useState(false);
     const [boardContent, setBoardContent] = useState<BoardContent[] | undefined>(undefined)
@@ -74,7 +75,7 @@ export default function BlogMain() {
                         <div className={`flex justify-between mb-10 items-center max-w-6xl w-full`}>
                             <div className={`font-bold text-xl`}>최근 글</div>
 
-                            { loginCheck() ? <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link> : null }
+                            { userInfo ? <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link> : null }
                         </div>
                         <div className={`h-full mb-4 max-w-6xl w-full`}>
                             <ul>
