@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import GOOGLE_ICON from '../../public/icon/google-icon.svg';
 import GITHUB_ICON from '../../public/icon/github-icon.svg';
@@ -14,6 +14,11 @@ interface HeaderOption {
     boardPageNav?: string[]
 }
 export default function Header(headerOption: HeaderOption) {
+    const [userData, setUserData] = useState({
+        email: '',
+        name: '',
+        provider: ''
+    });
     const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
@@ -35,13 +40,14 @@ export default function Header(headerOption: HeaderOption) {
     useEffect(() => {
         if(getCookie('state') !== 'active') {
             (async() => {
-                const userData = await FunctionGetUserInfo();
-                if (userData !== '') {
+                const userReqData = await FunctionGetUserInfo();
+                if (userReqData.email !== '') {
+                    setUserData(userReqData)
                     setUserInfo(userData);
                 }
             })()
         }
-    },[])
+    },[userData])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
