@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import GOOGLE_ICON from '../../public/icon/google-icon.svg';
 import GITHUB_ICON from '../../public/icon/github-icon.svg';
@@ -8,13 +8,14 @@ import axios from "axios";
 import * as SvgIcon from "/public/icon/index-svg";
 import {FunctionGetUserInfo} from "@/components/function/getUser";
 import useUserInfo from "@/hooks/useUserInfo";
+import {getCookie, setCookie} from "@/components/function/cookie";
 
 interface HeaderOption {
     boardPageNav?: string[]
 }
 export default function Header(headerOption: HeaderOption) {
-    const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
 
+    const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
         const res = await fetch(userLogOutUrl,{
@@ -24,6 +25,8 @@ export default function Header(headerOption: HeaderOption) {
         const resData = await res.json();
         if(resData === true) {
             deleteUserInfo();
+            useUserInfo.persist.clearStorage();
+            setCookie('state', '', -1);
             location.reload();
         } else {
             console.log('로그인 안되어 있는데 시도 에러');
@@ -31,11 +34,10 @@ export default function Header(headerOption: HeaderOption) {
     }
 
     useEffect(() => {
-        (async()=>{
-            const curUser = await FunctionGetUserInfo();
-            setUserInfo(curUser);
-        })()
-    },[setUserInfo])
+        FunctionGetUserInfo().then(data => {
+            data.email ? setUserInfo(data) : null
+        });
+    },[FunctionGetUserInfo])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
@@ -113,7 +115,7 @@ export default function Header(headerOption: HeaderOption) {
                     <ul className="px-1">
                         <li>
                             {
-                                userInfo ? userProfile() : loginBtn()
+                                userInfo.email ? userProfile() : loginBtn()
                             }
 
                             <dialog id="my_modal_2" className="modal">
