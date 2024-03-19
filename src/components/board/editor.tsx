@@ -4,10 +4,13 @@ import {NumOrUn, StrOrUn} from "@/components/type/wonsi";
 import process from "process";
 import axios from "axios";
 import FailAlert from "@/components/alert";
+import useUserInfo from "@/hooks/useUserInfo";
 
 export default function Editor() {
     const [writeState, setWriteState] = useState<boolean>(true)
     const [alertState, setAlertState] = useState<boolean>(true)
+    const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
+
     const alertOn = () => {
         setAlertState(false)
         setTimeout(() => {
@@ -40,14 +43,13 @@ export default function Editor() {
     const submitBoardContent = async(e: BaseSyntheticEvent) => {
         setWriteState(false)
         let userEmail;
-        let checkInfo= localStorage.getItem('cur-user-info');
-        let checkInfoSuccess = (checkInfo && checkInfo.length > 0)
-        if(!checkInfoSuccess) {
+
+        if(!userInfo) {
             console.log('에러!')
             alertOn()
             return false;
         } else {
-            userEmail = JSON.parse(checkInfo as string).email;
+            userEmail = userInfo.email;
 
             const createValue = {
                 category_id: categoryIdState,
