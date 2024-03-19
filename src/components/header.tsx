@@ -8,6 +8,7 @@ import axios from "axios";
 import * as SvgIcon from "/public/icon/index-svg";
 import {FunctionGetUserInfo} from "@/components/function/getUser";
 import useUserInfo from "@/hooks/useUserInfo";
+import {getCookie, setCookie} from "@/components/function/cookie";
 
 interface HeaderOption {
     boardPageNav?: string[]
@@ -25,6 +26,7 @@ export default function Header(headerOption: HeaderOption) {
         if(resData === true) {
             deleteUserInfo();
             useUserInfo.persist.clearStorage();
+            setCookie('state', '', -1);
             location.reload();
         } else {
             console.log('로그인 안되어 있는데 시도 에러');
@@ -33,12 +35,15 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async() => {
-            const userData = await FunctionGetUserInfo();
-            if (userData !== '') {
-                setUserInfo(userData);
+            const state = getCookie('state');
+            if (state === 'login') {
+                const userData = await FunctionGetUserInfo();
+                if (userData !== '') {
+                    setUserInfo(userData);
+                }
             }
         })()
-    },[setUserInfo])
+    },[])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
