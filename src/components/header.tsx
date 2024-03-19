@@ -24,6 +24,7 @@ export default function Header(headerOption: HeaderOption) {
         const resData = await res.json();
         if(resData === true) {
             deleteUserInfo();
+            useUserInfo.persist.clearStorage();
             location.reload();
         } else {
             console.log('로그인 안되어 있는데 시도 에러');
@@ -32,8 +33,10 @@ export default function Header(headerOption: HeaderOption) {
 
     useEffect(() => {
         (async()=>{
-            const curUser = await FunctionGetUserInfo();
-            setUserInfo(curUser);
+            if(!userInfo.email) {
+                const curUser = await FunctionGetUserInfo();
+                setUserInfo(curUser);
+            }
         })()
     },[setUserInfo])
 
@@ -113,7 +116,7 @@ export default function Header(headerOption: HeaderOption) {
                     <ul className="px-1">
                         <li>
                             {
-                                userInfo ? userProfile() : loginBtn()
+                                userInfo.email ? userProfile() : loginBtn()
                             }
 
                             <dialog id="my_modal_2" className="modal">
