@@ -38,7 +38,7 @@ export default function Header(headerOption: HeaderOption) {
                 setUserInfo(userData);
             }
         })()
-    },[])
+    },[setUserInfo])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;

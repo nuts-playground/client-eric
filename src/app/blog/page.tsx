@@ -21,6 +21,7 @@ interface BoardContent {
     update_dtm: string;
     delete_dtm: string;
 }
+
 export default function BlogMain() {
     const {userInfo} = useUserInfo()
     const [boardCategory, setBoardCategory] = useState<string[]>();
