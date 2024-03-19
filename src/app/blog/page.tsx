@@ -75,7 +75,7 @@ export default function BlogMain() {
                         <div className={`flex justify-between mb-10 items-center max-w-6xl w-full`}>
                             <div className={`font-bold text-xl`}>최근 글</div>
 
-                            { userInfo ? <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link> : null }
+                            { userInfo.email ? <Link href={'/blog/newcontent'} className={`btn btn-ghost underline`}>글쓰기</Link> : null }
                         </div>
                         <div className={`h-full mb-4 max-w-6xl w-full`}>
                             <ul>
