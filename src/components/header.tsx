@@ -14,11 +14,7 @@ interface HeaderOption {
     boardPageNav?: string[]
 }
 export default function Header(headerOption: HeaderOption) {
-    const [userData, setUserData] = useState({
-        email: '',
-        name: '',
-        provider: ''
-    });
+
     const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
@@ -38,16 +34,10 @@ export default function Header(headerOption: HeaderOption) {
     }
 
     useEffect(() => {
-        if(getCookie('state') !== 'active') {
-            (async() => {
-                const userReqData = await FunctionGetUserInfo();
-                if (userReqData.email !== '') {
-                    setUserData(userReqData)
-                    setUserInfo(userData);
-                }
-            })()
-        }
-    },[])
+        FunctionGetUserInfo().then(data => {
+            data.email ? setUserInfo(data) : null
+        });
+    },[FunctionGetUserInfo])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {
         const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_START_LOGIN_URL as string;
