@@ -44,7 +44,8 @@ export default function Editor() {
         let checkInfoSuccess = (checkInfo && checkInfo.length > 0)
         if(!checkInfoSuccess) {
             console.log('에러!')
-            alertOn()
+            alert('에러!')
+            setWriteState(true)
             return false;
         } else {
             userEmail = JSON.parse(checkInfo as string).email;
@@ -83,7 +84,7 @@ export default function Editor() {
     }
 
     return (
-        <div className={`h-full`}>
+        <div className={`h-full max-w-6xl w-full`}>
             <div className={`mb-5`}>
                 <select className="select max-w-xs bg-gray-300" defaultValue={'1'} onChange={onChangeCategory}>
                     {
