@@ -16,7 +16,7 @@ export default function BlogNewContent() {
     return (
         <main className={`h-full flex flex-col`}>
             <Header/>
-            <section className={`p-12 h-full box-border`}>
+            <section className={`p-12 h-full box-border flex justify-center`}>
                 <Editor/>
             </section>
         </main>

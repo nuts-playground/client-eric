@@ -60,7 +60,8 @@ const Editor: React.FC<BoardUpdateProps> = ({updateTitle, updateContent}) => {
 
         if(!userInfo) {
             console.log('에러!')
-            alertOn()
+            alert('에러!')
+            setWriteState(true)
             return false;
         } else {
             userEmail = userInfo.email;
@@ -139,7 +140,7 @@ const Editor: React.FC<BoardUpdateProps> = ({updateTitle, updateContent}) => {
     }
 
     return (
-        <div className={`h-full`}>
+        <div className={`h-full max-w-6xl w-full`}>
             <div className={`mb-5`}>
                 <select className="select max-w-xs bg-gray-300" defaultValue={'1'} onChange={onChangeCategory}>
                     {
