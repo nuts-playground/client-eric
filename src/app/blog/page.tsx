@@ -84,6 +84,7 @@ export default function BlogMain() {
                                     boardContent?.map(item => {
                                         return <li key={item.title}>
                                             <Content
+                                                contentId={item.content_id}
                                                 title={item.title}
                                                 writeTime={item.create_dtm}
                                                 content={item.content}

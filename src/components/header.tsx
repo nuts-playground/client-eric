@@ -16,6 +16,7 @@ interface HeaderOption {
 export default function Header(headerOption: HeaderOption) {
 
     const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
+    const [loginState, setLoginState] = useState(false);
     async function userLogOut() {
         const userLogOutUrl = process.env.NEXT_PUBLIC_API_URL + '/auth' + '/logOut'
         const res = await fetch(userLogOutUrl,{
@@ -34,9 +35,9 @@ export default function Header(headerOption: HeaderOption) {
     }
 
     useEffect(() => {
-        FunctionGetUserInfo().then(data => {
-            data.email ? setUserInfo(data) : null
-        });
+            FunctionGetUserInfo().then(data => {
+                data.email ? setUserInfo(data) : null
+            });
     },[FunctionGetUserInfo])
 
     const oauthLogin = async (e: React.MouseEvent<HTMLButtonElement>, param: string) => {

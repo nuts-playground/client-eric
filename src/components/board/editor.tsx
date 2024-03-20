@@ -1,16 +1,19 @@
-import MDEditor, { commands } from "@uiw/react-md-editor";
 import React, {BaseSyntheticEvent, ChangeEvent, ChangeEventHandler, SyntheticEvent, useEffect, useState} from "react";
 import {NumOrUn, StrOrUn} from "@/components/type/wonsi";
 import process from "process";
-import axios from "axios";
-import FailAlert from "@/components/alert";
 import useUserInfo from "@/hooks/useUserInfo";
+import axios from "axios";
+import {useSearchParams} from "next/navigation";
 
-export default function Editor() {
+
+interface BoardUpdateProps {
+    updateTitle?: string;
+    updateContent?: string;
+}
+const Editor: React.FC<BoardUpdateProps> = ({updateTitle, updateContent}) => {
     const [writeState, setWriteState] = useState<boolean>(true)
     const [alertState, setAlertState] = useState<boolean>(true)
     const {userInfo, deleteUserInfo, setUserInfo} = useUserInfo();
-
     const alertOn = () => {
         setAlertState(false)
         setTimeout(() => {
@@ -23,6 +26,17 @@ export default function Editor() {
             id: 1
         },
     ]
+    const params = useSearchParams();
+    const idParam = params.get('id');
+    useEffect(() => {
+        if(updateTitle) {
+            setTitleState(updateTitle)
+        }
+
+        if (updateContent) {
+            setContentState(updateContent)
+        }
+    }, []);
     const [categoryIdState, setCategoryIdState] = useState<string>('1')
     const [titleState, setTitleState] = useState<StrOrUn>()
 
@@ -51,6 +65,7 @@ export default function Editor() {
         } else {
             userEmail = userInfo.email;
 
+
             const createValue = {
                 category_id: categoryIdState,
                 title: titleState,
@@ -58,25 +73,64 @@ export default function Editor() {
                 user_email: userEmail
             }
 
+            const updateValue = {
+                content_id: idParam,
+                user_email: userEmail,
+                category_id: categoryIdState,
+                title: titleState,
+                content: contentState,
+            }
+
+            console.log(updateValue)
             const createBoardUrl = process.env.NEXT_PUBLIC_API_URL + '/board' + '/content'
-            await axios.post(createBoardUrl, createValue, {
-                withCredentials: true
-            })
-            .then(res => {
-                const successSw = res.data.status === 'success';
-                if(successSw) {
-                    setWriteState(true)
-                    location.pathname = '/blog'
-                } else {
-                    console.log('실패')
-                    alertOn()
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                alertOn()
-                setWriteState(true)
-            })
+            const updateFunction = async() => {
+                await axios.patch(createBoardUrl, updateValue, {
+                    withCredentials: true
+                })
+                    .then(res => {
+                        const successSw = res.data.status === 'success';
+                        if(successSw) {
+                            setWriteState(true)
+                            location.pathname = '/blog'
+                        } else {
+                            console.log('실패')
+                            setWriteState(true)
+
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        alertOn()
+                        setWriteState(true)
+                    })
+            }
+            const createFunction = async() => {
+                await axios.post(createBoardUrl, createValue, {
+                    withCredentials: true
+                })
+                    .then(res => {
+                        const successSw = res.data.status === 'success';
+                        if(successSw) {
+                            setWriteState(true)
+                            location.pathname = '/blog'
+                        } else {
+                            console.log('실패')
+                            setWriteState(true)
+
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        alertOn()
+                        setWriteState(true)
+                    })
+            }
+
+            if (updateTitle && updateContent) {
+                await updateFunction()
+            } else {
+                await createFunction();
+            }
         }
     }
 
@@ -96,12 +150,13 @@ export default function Editor() {
                 </select>
             </div>
             <div className={`mb-5`}>
-                <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`} onChange={onChangeTitle}/>
+                <input className={`text-xl w-full h-14 p-4 border rounded`} type="text" placeholder={`제목`} onChange={onChangeTitle} defaultValue={updateTitle?.length !== undefined ? updateTitle : undefined }/>
             </div>
             <textarea
                 className="textarea textarea-bordered  bg-white w-full resize-none sm:h-2/3 h-3/4"
                 placeholder="본문 내용을 적어주세요."
                 onChange={onChangeContent}
+                defaultValue={updateContent?.length !== undefined ? updateContent : undefined}
             ></textarea>
             <div className={`flex gap-2 justify-center my-5`}>
                 {
@@ -119,3 +174,5 @@ export default function Editor() {
         </div>
     )
 }
+
+export default Editor;
