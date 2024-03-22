@@ -65,15 +65,12 @@ const Editor: React.FC<BoardUpdateProps> = ({updateTitle, updateContent}) => {
             return false;
         } else {
             userEmail = userInfo.email;
-
-
             const createValue = {
                 category_id: categoryIdState,
                 title: titleState,
                 content: contentState,
                 user_email: userEmail
             }
-
             const updateValue = {
                 content_id: idParam,
                 user_email: userEmail,
@@ -96,7 +93,6 @@ const Editor: React.FC<BoardUpdateProps> = ({updateTitle, updateContent}) => {
                         } else {
                             console.log('실패')
                             setWriteState(true)
-
                         }
                     })
                     .catch(err => {
